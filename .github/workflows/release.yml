@@ -41,12 +41,12 @@ jobs:
         if: matrix.os == 'ubuntu-latest'
         run: cargo deb --target ${{ matrix.target }} --no-build
 
-      - name: Upload artifacts
+      - name: Upload .deb and .exe artifacts
         uses: actions/upload-artifact@v4
         with:
-          name: binary-${{ matrix.os }}
+          name: release-binaries
           path: |
-            target/${{ matrix.target }}/release/
+            target/${{ matrix.target }}/release/dotdash.exe
             target/${{ matrix.target }}/debian/*.deb
 
   create-release:
@@ -63,7 +63,7 @@ jobs:
           echo "Version: $VERSION"
           echo "version=$VERSION" >> $GITHUB_OUTPUT
 
-      - name: Download artifacts
+      - name: Download .deb and .exe artifacts
         uses: actions/download-artifact@v4
         with:
           path: artifacts
@@ -76,5 +76,5 @@ jobs:
           name: Release v${{ steps.get_version.outputs.version }}
           body: "自动化发布版本 v${{ steps.get_version.outputs.version }}"
           files: |
-            artifacts/binary-ubuntu-latest/*.deb  # 仅上传 .deb 文件
-            artifacts/binary-windows-latest/*.exe  # 仅上传 .exe 文件
+            artifacts/release-binaries/*.deb  # 仅上传 .deb 文件
+            artifacts/release-binaries/dotdash.exe  # 仅上传 .exe 文件
