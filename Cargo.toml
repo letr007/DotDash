@@ -11,8 +11,6 @@ clap = { version = "4.0", features = ["derive"] }
 name = "dotdash"
 # 维护者
 maintainer = "Letr<letr007@foxmail.com>"
-# 描述
-description = "Encodes and decodes text to/from Morse code"
 # 依赖项
 depends = "$auto"
 # 安装路径
