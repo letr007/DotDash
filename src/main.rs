@@ -23,7 +23,7 @@ fn main() {
             Arg::new("decode")
                 .short('d')
                 .long("decode")
-                .value_name("MORSE")
+                .value_name("TEXT")
                 .help("Decodes Morse code to text")
                 // .takes_value(true),
         )
