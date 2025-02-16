@@ -5,3 +5,18 @@ edition = "2021"
 
 [dependencies]
 clap = { version = "4.0", features = ["derive"] }
+[package.metadata.deb]
+# 包名
+name = "dotdash"
+# 版本号
+version = "0.1.0"
+# 维护者
+maintainer = "Letr<letr007@foxmail.com>"
+# 描述
+description = "Encodes and decodes text to/from Morse code"
+# 依赖项
+depends = "$auto"
+# 安装路径
+assets = [
+    ["target/release/dotdash", "usr/bin/", "755"],
+]
