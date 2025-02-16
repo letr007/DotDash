@@ -94,5 +94,5 @@ jobs:
           name: Release v${{ steps.get_version.outputs.version }}
           body: "v${{ steps.get_version.outputs.version }}"
           files: |
-            artifacts/ubuntu-deb-binaries/*.deb  # 上传 .deb 文件
-            artifacts/windows-exe-binaries/*.exe  # 上传 .exe 文件
+            artifacts/ubuntu-deb-binaries/*.deb
+            artifacts/windows-exe-binaries/*.exe
