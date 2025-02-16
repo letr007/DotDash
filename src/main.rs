@@ -29,7 +29,6 @@ fn main() {
         )
         .get_matches();
 
-    // 根据用户输入调用相应的函数
     if let Some(text) = matches.get_one::<String>("encode") {
         let morse_code = string_to_morse(&char_to_morse, text);
         println!("Encoded Morse code: {}", morse_code);
@@ -41,7 +40,6 @@ fn main() {
     }
 }
 
-// 以下是你原有的函数实现
 fn init_c2m_hashmap() -> HashMap<char, &'static str> {
     let mut char_to_morse: HashMap<char, &'static str> = HashMap::new();
     char_to_morse.insert('A', "01");
