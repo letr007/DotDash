@@ -26,6 +26,7 @@ fn main() {
                 .value_name("TEXT")
                 .help("Decodes Morse code to text")
                 // .takes_value(true),
+                .allow_hyphen_values(true)
         )
         .get_matches();
 
