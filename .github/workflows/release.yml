@@ -86,6 +86,11 @@ jobs:
           name: windows-exe-binaries
           path: artifacts
 
+      - name: List artifact contents
+        run: |
+          ls -al artifacts/ubuntu-deb-binaries
+          ls -al artifacts/windows-exe-binaries
+
       - name: Create GitHub Release
         uses: softprops/action-gh-release@v1
         with:
