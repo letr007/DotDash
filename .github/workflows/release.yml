@@ -98,5 +98,5 @@ jobs:
           name: Release v${{ steps.get_version.outputs.version }}
           body: "v${{ steps.get_version.outputs.version }}"
           files: |
-            /home/runner/work/DotDash/DotDash/artifacts/ubuntu-deb-binaries/*.deb
-            /home/runner/work/DotDash/DotDash/artifacts/windows-exe-binaries/*.exe
+            /home/runner/work/DotDash/DotDash/artifacts/*.deb
+            /home/runner/work/DotDash/DotDash/artifacts/*.exe
