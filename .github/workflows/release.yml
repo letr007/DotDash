@@ -89,7 +89,6 @@ jobs:
       - name: List artifact contents
         run: |
           ls -al /home/runner/work/DotDash/DotDash/artifacts/ubuntu-deb-binaries
-          ls -al /home/runner/work/DotDash/DotDash/artifacts/windows-exe-binaries
 
       - name: Create GitHub Release
         uses: softprops/action-gh-release@v1
