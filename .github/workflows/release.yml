@@ -63,6 +63,7 @@ jobs:
       - name: Create GitHub Release
         uses: softprops/action-gh-release@v1
         with:
+          token: ${{ secrets.KEY }}
           tag_name: v${{ steps.get_version.outputs.version }}
           name: Release v${{ steps.get_version.outputs.version }}
           body: "Automated release for version v${{ steps.get_version.outputs.version }}"
