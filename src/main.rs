@@ -7,7 +7,7 @@ fn main() {
     let morse_to_char = init_m2c_hashmap(&char_to_morse);
 
     // 使用 clap 定义命令行参数
-    let matches = Command::new("Morse Code Translator")
+    let matches = Command::new("DotDash - A Morse Code Translator")
         .version("1.0")
         .author("Letr<letr007@foxmail.com>")
         .about("Encodes and decodes text to/from Morse code")
@@ -17,24 +17,47 @@ fn main() {
                 .long("encode")
                 .value_name("TEXT")
                 .help("Encodes text to Morse code")
-                // .takes_value(true),
         )
         .arg(
             Arg::new("decode")
                 .short('d')
                 .long("decode")
-                .value_name("TEXT")
+                .value_name("MORSE")
                 .help("Decodes Morse code to text")
-                // .takes_value(true),
                 .allow_hyphen_values(true)
+        )
+        .arg(
+            Arg::new("dot")
+                .short('o')
+                .long("dot")
+                .value_name("CHARACTER")
+                .help("Dot character to use in Morse code")
+        )
+        .arg(
+            Arg::new("dash")
+                .short('a')
+                .long("dash")
+                .value_name("CHARACTER")
+                .help("Dash character to use in Morse code")
         )
         .get_matches();
 
+    // if let Some(text) = matches.get_one::<String>("encode") {
+    //     let morse_code = string_to_morse(&char_to_morse, text, None, None);
+    //     println!("Encoded Morse code: {}", morse_code);
+    // } else if let Some(morse_code) = matches.get_one::<String>("decode") {
+    //     let text = morse_to_string(&morse_to_char, morse_code, None, None);
+    //     println!("Decoded text: {}", text);
+    // } else {
+    //     println!("No command provided. Use --help for usage information.");
+    // }
+    let dot = matches.get_one::<String>("dot");
+    let dash = matches.get_one::<String>("dash");
     if let Some(text) = matches.get_one::<String>("encode") {
-        let morse_code = string_to_morse(&char_to_morse, text);
+        let morse_code = string_to_morse(&char_to_morse, &text, dot, dash);
         println!("Encoded Morse code: {}", morse_code);
     } else if let Some(morse_code) = matches.get_one::<String>("decode") {
-        let text = morse_to_string(&morse_to_char, morse_code);
+        let text = morse_to_string(&morse_to_char, &morse_code, dot, dash);
         println!("Decoded text: {}", text);
     } else {
         println!("No command provided. Use --help for usage information.");
@@ -95,7 +118,9 @@ fn init_m2c_hashmap(char_to_morse: &HashMap<char, &'static str>) -> HashMap<&'st
     morse_to_char
 }
 
-fn string_to_morse(char_to_morse: &HashMap<char, &'static str>, text: &str) -> String {
+fn string_to_morse(char_to_morse: &HashMap<char, &'static str>, text: &str, dot:Option<&String>, dash:Option<&String>) -> String {
+    let dot = dot.map(|s| s.as_str()).unwrap_or("·");
+    let dash = dash.map(|s| s.as_str()).unwrap_or("-");
     let text = text
         .to_uppercase()
         .replace("？", "?")
@@ -107,13 +132,15 @@ fn string_to_morse(char_to_morse: &HashMap<char, &'static str>, text: &str) -> S
             result += " ";
         }
     }
-    result.replace("0", "·").replace("1", "-")
+    result.replace("0", dot).replace("1", dash)
 }
 
-fn morse_to_string(morse_to_char: &HashMap<&'static str, char>, morse: &str) -> String {
+fn morse_to_string(morse_to_char: &HashMap<&'static str, char>, morse: &str, dot:Option<&String>, dash:Option<&String>) -> String {
+    let dot = dot.map(|s| s.as_str()).unwrap_or("·");
+    let dash = dash.map(|s| s.as_str()).unwrap_or("-");
     let morse = morse
-        .replace("·", "0")
-        .replace("-", "1");
+        .replace(dot, "0")
+        .replace(dash, "1");
     let mut result = String::new();
     for word in morse.split(" ") {
         if let Some(c) = morse_to_char.get(&word) {
@@ -122,3 +149,12 @@ fn morse_to_string(morse_to_char: &HashMap<&'static str, char>, morse: &str) -> 
     }
     result
 }
+
+// fn raw_to_medium(text:&str, dot:&str, dash:&str) -> &str{
+//     text.replace(dot, "0").replace(dash, "1");
+//     text
+// }
+// fn medium_to_morse(text:&str, dot:&str, dash:&str) -> &str{
+//     text.replace("0", dot).replace("1", dash);
+//     text
+// }
